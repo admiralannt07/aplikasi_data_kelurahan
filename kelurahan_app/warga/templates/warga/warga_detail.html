@@ -1,0 +1,248 @@
+{% extends 'warga/base.html' %}
+
+{% block title %}Detail {{ object.nama_lengkap }} - Kelurahan{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Breadcrumb -->
+    <nav class="flex mb-8" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+                <a href="{% url 'landing' %}" class="inline-flex items-center text-sm font-medium text-kelurahan-700 hover:text-kelurahan-600">
+                    <i class="fas fa-home mr-2"></i>
+                    Beranda
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <i class="fas fa-chevron-right text-kelurahan-400 mx-2"></i>
+                    <a href="{% url 'warga-list' %}" class="ml-1 text-sm font-medium text-kelurahan-700 hover:text-kelurahan-600 md:ml-2">Daftar Warga</a>
+                </div>
+            </li>
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <i class="fas fa-chevron-right text-kelurahan-400 mx-2"></i>
+                    <span class="ml-1 text-sm font-medium text-kelurahan-500 md:ml-2">{{ object.nama_lengkap }}</span>
+                </div>
+            </li>
+        </ol>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Profile Card -->
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-kelurahan-500 to-kelurahan-600 px-6 py-8">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="h-20 w-20 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                                <span class="text-white font-bold text-2xl">{{ object.nama_lengkap|first|upper }}</span>
+                            </div>
+                        </div>
+                        <div class="ml-6">
+                            <h1 class="text-3xl font-bold text-white">{{ object.nama_lengkap }}</h1>
+                            <p class="text-kelurahan-100 mt-1">
+                                <i class="fas fa-id-card mr-2"></i>
+                                NIK: {{ object.nik }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Details -->
+                <div class="px-6 py-6">
+                    <h2 class="text-xl font-semibold text-kelurahan-800 mb-6">Informasi Personal</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="h-10 w-10 bg-kelurahan-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-user text-kelurahan-600"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-kelurahan-500">Nama Lengkap</p>
+                                    <p class="text-lg text-kelurahan-900">{{ object.nama_lengkap }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="h-10 w-10 bg-kelurahan-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-id-card text-kelurahan-600"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-kelurahan-500">NIK</p>
+                                    <p class="text-lg text-kelurahan-900 font-mono">{{ object.nik }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="h-10 w-10 bg-kelurahan-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-map-marker-alt text-kelurahan-600"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-kelurahan-500">Alamat</p>
+                                    <p class="text-lg text-kelurahan-900">{{ object.alamat }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="h-10 w-10 bg-kelurahan-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-phone text-kelurahan-600"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-kelurahan-500">No. Telepon</p>
+                                    <p class="text-lg text-kelurahan-900">{{ object.no_telepon|default:"Tidak tersedia" }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pengaduan Section -->
+            <div class="mt-8 bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="px-6 py-4 bg-kelurahan-50 border-b border-kelurahan-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-semibold text-kelurahan-800">
+                            <i class="fas fa-clipboard-list mr-2"></i>
+                            Riwayat Pengaduan
+                        </h2>
+                        <span class="bg-kelurahan-100 text-kelurahan-800 text-sm font-medium px-3 py-1 rounded-full">
+                            {{ object.pengaduan.count }} Pengaduan
+                        </span>
+                    </div>
+                </div>
+
+                <div class="px-6 py-6">
+                    {% if object.pengaduan.all %}
+                        <div class="space-y-4">
+                            {% for aduan in object.pengaduan.all %}
+                            <div class="border border-kelurahan-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-200">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-medium text-kelurahan-900 mb-2">{{ aduan.judul }}</h3>
+                                        <p class="text-kelurahan-600 mb-3">{{ aduan.deskripsi }}</p>
+                                        <div class="flex items-center text-sm text-kelurahan-500">
+                                            <i class="fas fa-calendar-alt mr-2"></i>
+                                            {{ aduan.tanggal_lapor|date:"d F Y" }}
+                                        </div>
+                                    </div>
+                                    <div class="ml-4 flex flex-col items-end gap-2">
+                                        {% if aduan.status == 'PENDING' %}
+                                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                                <i class="fas fa-clock mr-1"></i>{{ aduan.get_status_display }}
+                                            </span>
+                                        {% elif aduan.status == 'DIPROSES' %}
+                                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                                <i class="fas fa-cog mr-1"></i>{{ aduan.get_status_display }}
+                                            </span>
+                                        {% elif aduan.status == 'SELESAI' %}
+                                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                                <i class="fas fa-check mr-1"></i>{{ aduan.get_status_display }}
+                                            </span>
+                                        {% endif %}
+                                        
+                                        <!-- Action buttons for pengaduan -->
+                                        <div class="flex gap-2 mt-2">
+                                            <a href="{% url 'pengaduan-update' aduan.pk %}" 
+                                               class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-kelurahan-600 hover:bg-kelurahan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-kelurahan-500 transition-colors duration-200">
+                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                </svg>
+                                                Edit
+                                            </a>
+                                            <a href="{% url 'pengaduan-delete' aduan.pk %}" 
+                                               onclick="return confirm('Apakah Anda yakin ingin menghapus pengaduan ini?')"
+                                               class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
+                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                </svg>
+                                                Hapus
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-8">
+                            <div class="mx-auto h-16 w-16 text-kelurahan-400 mb-4">
+                                <i class="fas fa-clipboard-list text-4xl"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-kelurahan-900 mb-2">Belum ada pengaduan</h3>
+                            <p class="text-kelurahan-600">Warga ini belum pernah membuat pengaduan</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="lg:col-span-1">
+            <!-- Quick Stats -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h3 class="text-lg font-semibold text-kelurahan-800 mb-4">Statistik</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-kelurahan-600">Total Pengaduan</span>
+                        <span class="font-semibold text-kelurahan-900">{{ object.pengaduan.count }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-kelurahan-600">Pengaduan Selesai</span>
+                        <span class="font-semibold text-green-600">{{ object.pengaduan.all|length }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-kelurahan-600">Status Aktif</span>
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">
+                            <i class="fas fa-check-circle mr-1"></i>Terdaftar
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-kelurahan-800 mb-4">Aksi Cepat</h3>
+                <div class="space-y-3">
+                    <a href="{% url 'warga-edit' object.pk %}" 
+                       class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2">
+                        <i class="fas fa-edit"></i>
+                        Edit Data Warga
+                    </a>
+                    
+                    <a href="{% url 'warga-hapus' object.pk %}" 
+                       class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2"
+                       onclick="return confirm('Apakah Anda yakin ingin menghapus data warga {{ object.nama_lengkap }}?')">
+                        <i class="fas fa-trash"></i>
+                        Hapus Data Warga
+                    </a>
+                    
+                    <a href="{% url 'pengaduan-tambah' %}" 
+                       class="w-full bg-kelurahan-600 hover:bg-kelurahan-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2">
+                        <i class="fas fa-plus"></i>
+                        Buat Pengaduan Baru
+                    </a>
+                    
+                    <a href="{% url 'warga-list' %}" 
+                       class="w-full bg-kelurahan-100 hover:bg-kelurahan-200 text-kelurahan-700 px-4 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2">
+                        <i class="fas fa-arrow-left"></i>
+                        Kembali ke Daftar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

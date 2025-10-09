@@ -1,0 +1,117 @@
+{% extends 'warga/base.html' %}
+{% load static %}
+
+{% block title %}Konfirmasi Hapus Pengaduan{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-12">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <div class="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+        </svg>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Konfirmasi Penghapusan</h1>
+      <p class="text-gray-600">Tindakan ini tidak dapat dibatalkan</p>
+    </div>
+
+    <!-- Confirmation Card -->
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+      <div class="p-8">
+        <!-- Warning Message -->
+        <div class="bg-red-50 border border-red-200 rounded-xl p-6 mb-6">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <svg class="w-6 h-6 text-red-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-lg font-semibold text-red-800 mb-2">Peringatan!</h3>
+              <p class="text-red-700">
+                Apakah Anda yakin ingin menghapus pengaduan: 
+                <span class="font-bold text-red-900">"{{ object.judul_pengaduan }}"</span>?
+              </p>
+              <p class="text-red-600 text-sm mt-2">
+                Semua data terkait pengaduan ini akan dihapus secara permanen dan tidak dapat dipulihkan.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pengaduan Info Summary -->
+        <div class="bg-gray-50 rounded-xl p-6 mb-6">
+          <h4 class="font-semibold text-gray-900 mb-3">Data yang akan dihapus:</h4>
+          <div class="grid grid-cols-1 gap-4 text-sm">
+            <div>
+              <span class="text-gray-600">Pelapor:</span>
+              <span class="font-medium text-gray-900 ml-2">{{ object.pelapor.nama_lengkap }}</span>
+            </div>
+            <div>
+              <span class="text-gray-600">Judul Pengaduan:</span>
+              <span class="font-medium text-gray-900 ml-2">{{ object.judul_pengaduan }}</span>
+            </div>
+            <div>
+              <span class="text-gray-600">Status:</span>
+              <span class="ml-2">
+                {% if object.status == 'BARU' %}
+                  <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">{{ object.get_status_display }}</span>
+                {% elif object.status == 'DIPROSES' %}
+                  <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">{{ object.get_status_display }}</span>
+                {% elif object.status == 'SELESAI' %}
+                  <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">{{ object.get_status_display }}</span>
+                {% endif %}
+              </span>
+            </div>
+            <div>
+              <span class="text-gray-600">Tanggal Dibuat:</span>
+              <span class="font-medium text-gray-900 ml-2">{{ object.tanggal_dibuat|date:"d F Y" }}</span>
+            </div>
+            <div>
+              <span class="text-gray-600">Deskripsi:</span>
+              <span class="font-medium text-gray-900 ml-2">{{ object.deskripsi_pengaduan|truncatechars:100 }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <form method="post" class="space-y-4">
+          {% csrf_token %}
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <!-- Cancel Button -->
+            <a href="{% url 'pengaduan-list' %}" 
+               class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm hover:shadow-md">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+              Batal
+            </a>
+            
+            <!-- Delete Button -->
+            <button type="submit" 
+                    class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200 shadow-sm hover:shadow-md transform hover:scale-105">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+              Ya, Hapus Pengaduan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Back to List Link -->
+    <div class="text-center mt-8">
+      <a href="{% url 'pengaduan-list' %}" 
+         class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Kembali ke Daftar Pengaduan
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

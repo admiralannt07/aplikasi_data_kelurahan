@@ -1,0 +1,422 @@
+{% extends 'warga/base.html' %}
+
+{% block title %}Selamat Datang - Aplikasi Data Kelurahan{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative bg-gradient-to-br from-kelurahan-600 to-kelurahan-800 overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-10"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="text-center">
+            <h1 class="hero-title text-4xl md:text-6xl font-bold text-white mb-6 opacity-0">
+                Kelurahan Digital
+            </h1>
+            <p class="hero-subtitle text-xl md:text-2xl text-kelurahan-100 mb-8 max-w-3xl mx-auto opacity-0">
+                Sistem informasi modern untuk pengelolaan data warga dan pengaduan masyarakat yang lebih efisien dan transparan
+            </p>
+            <div class="hero-buttons flex flex-col sm:flex-row gap-4 justify-center opacity-0">
+                <a href="{% url 'warga-list' %}" class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-kelurahan-600 bg-white hover:bg-gray-50 transition-colors duration-200 shadow-lg">
+                    <i class="fas fa-users mr-2"></i>
+                    Lihat Data Warga
+                </a>
+                <a href="{% url 'pengaduan-tambah' %}" class="inline-flex items-center px-8 py-3 border-2 border-white text-base font-medium rounded-lg text-white hover:bg-white hover:text-kelurahan-600 transition-colors duration-200">
+                    <i class="fas fa-plus mr-2"></i>
+                    Buat Pengaduan
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Decorative elements -->
+    <div class="hero-decoration-1 absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white opacity-5 rounded-full"></div>
+    <div class="hero-decoration-2 absolute bottom-0 left-0 -mb-8 -ml-8 w-48 h-48 bg-white opacity-5 rounded-full"></div>
+</div>
+
+<!-- Features Section -->
+<div class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="features-title text-3xl md:text-4xl font-bold text-gray-900 mb-4 opacity-0">
+                Fitur Unggulan
+            </h2>
+            <p class="features-subtitle text-lg text-gray-600 max-w-2xl mx-auto opacity-0">
+                Aplikasi yang dirancang khusus untuk memudahkan pengelolaan administrasi kelurahan
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="feature-card bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300 opacity-0">
+                <div class="w-16 h-16 bg-kelurahan-100 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-users text-kelurahan-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Manajemen Data Warga</h3>
+                <p class="text-gray-600">
+                    Kelola data warga dengan mudah, termasuk informasi pribadi, alamat, dan kontak yang terorganisir dengan baik.
+                </p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="feature-card bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300 opacity-0">
+                <div class="w-16 h-16 bg-kelurahan-100 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-exclamation-circle text-kelurahan-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Sistem Pengaduan</h3>
+                <p class="text-gray-600">
+                    Platform pengaduan masyarakat yang memungkinkan warga melaporkan masalah dan memantau status penyelesaiannya.
+                </p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="feature-card bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300 opacity-0">
+                <div class="w-16 h-16 bg-kelurahan-100 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-chart-line text-kelurahan-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Laporan & Statistik</h3>
+                <p class="text-gray-600">
+                    Dapatkan insight mendalam tentang data demografis dan status pengaduan melalui dashboard yang informatif.
+                </p>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="feature-card bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300 opacity-0">
+                <div class="w-16 h-16 bg-kelurahan-100 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-mobile-alt text-kelurahan-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Responsif & Modern</h3>
+                <p class="text-gray-600">
+                    Interface yang responsif dan modern, dapat diakses dengan mudah dari berbagai perangkat.
+                </p>
+            </div>
+            
+            <!-- Feature 5 -->
+            <div class="feature-card bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300 opacity-0">
+                <div class="w-16 h-16 bg-kelurahan-100 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-shield-alt text-kelurahan-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Keamanan Data</h3>
+                <p class="text-gray-600">
+                    Sistem keamanan yang terjamin untuk melindungi data pribadi warga dan informasi sensitif lainnya.
+                </p>
+            </div>
+            
+            <!-- Feature 6 -->
+            <div class="feature-card bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300 opacity-0">
+                <div class="w-16 h-16 bg-kelurahan-100 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-clock text-kelurahan-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Akses 24/7</h3>
+                <p class="text-gray-600">
+                    Layanan yang tersedia 24 jam sehari, 7 hari seminggu untuk kemudahan akses kapan saja dibutuhkan.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Section -->
+<div class="py-16 bg-kelurahan-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="stats-title text-3xl font-bold text-gray-900 mb-4 opacity-0">
+                Statistik Kelurahan
+            </h2>
+            <p class="stats-subtitle text-lg text-gray-600 opacity-0">
+                Data terkini mengenai kondisi kelurahan
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="stat-item text-center opacity-0">
+                <div class="w-20 h-20 bg-kelurahan-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users text-white text-2xl"></i>
+                </div>
+                <div class="text-3xl font-bold text-gray-900 mb-2">{{ total_warga|default:"0" }}</div>
+                <div class="text-gray-600">Total Warga</div>
+            </div>
+            
+            <div class="stat-item text-center opacity-0">
+                <div class="w-20 h-20 bg-kelurahan-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-exclamation-circle text-white text-2xl"></i>
+                </div>
+                <div class="text-3xl font-bold text-gray-900 mb-2">{{ total_pengaduan|default:"0" }}</div>
+                <div class="text-gray-600">Total Pengaduan</div>
+            </div>
+            
+            <div class="stat-item text-center opacity-0">
+                <div class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check-circle text-white text-2xl"></i>
+                </div>
+                <div class="text-3xl font-bold text-gray-900 mb-2">{{ pengaduan_selesai|default:"0" }}</div>
+                <div class="text-gray-600">Pengaduan Selesai</div>
+            </div>
+            
+            <div class="stat-item text-center opacity-0">
+                <div class="w-20 h-20 bg-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-hourglass-half text-white text-2xl"></i>
+                </div>
+                <div class="text-3xl font-bold text-gray-900 mb-2">{{ pengaduan_proses|default:"0" }}</div>
+                <div class="text-gray-600">Dalam Proses</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 class="cta-title text-3xl font-bold text-gray-900 mb-4 opacity-0">
+            Siap Memulai?
+        </h2>
+        <p class="cta-subtitle text-lg text-gray-600 mb-8 opacity-0">
+            Bergabunglah dengan sistem digital kelurahan untuk pengalaman layanan yang lebih baik
+        </p>
+        <div class="cta-buttons flex flex-col sm:flex-row gap-4 justify-center opacity-0">
+            <a href="{% url 'warga-tambah' %}" class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-kelurahan-600 hover:bg-kelurahan-700 transition-colors duration-200 shadow-lg">
+                <i class="fas fa-user-plus mr-2"></i>
+                Daftar Sebagai Warga
+            </a>
+            <a href="{% url 'pengaduan-list' %}" class="inline-flex items-center px-8 py-3 border-2 border-kelurahan-600 text-base font-medium rounded-lg text-kelurahan-600 hover:bg-kelurahan-50 transition-colors duration-200">
+                <i class="fas fa-list mr-2"></i>
+                Lihat Pengaduan
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animasi Hero Section
+    const heroTimeline = anime.timeline({
+        easing: 'easeOutExpo',
+        duration: 1200
+    });
+
+    heroTimeline
+        .add({
+            targets: '.hero-title',
+            opacity: [0, 1],
+            translateY: [50, 0],
+            duration: 1000
+        })
+        .add({
+            targets: '.hero-subtitle',
+            opacity: [0, 1],
+            translateY: [30, 0],
+            duration: 800
+        }, '-=600')
+        .add({
+            targets: '.hero-buttons',
+            opacity: [0, 1],
+            translateY: [20, 0],
+            duration: 600
+        }, '-=400')
+        .add({
+            targets: '.hero-decoration-1',
+            scale: [0, 1],
+            rotate: [0, 360],
+            duration: 1500,
+            easing: 'easeOutElastic(1, .8)'
+        }, '-=800')
+        .add({
+            targets: '.hero-decoration-2',
+            scale: [0, 1],
+            rotate: [0, -180],
+            duration: 1200,
+            easing: 'easeOutElastic(1, .6)'
+        }, '-=1200');
+
+    // Intersection Observer untuk animasi scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                
+                // Animasi untuk judul dan subtitle features
+                if (target.classList.contains('features-title')) {
+                    anime({
+                        targets: '.features-title',
+                        opacity: [0, 1],
+                        translateY: [40, 0],
+                        duration: 800,
+                        easing: 'easeOutQuart'
+                    });
+                }
+                
+                if (target.classList.contains('features-subtitle')) {
+                    anime({
+                        targets: '.features-subtitle',
+                        opacity: [0, 1],
+                        translateY: [30, 0],
+                        duration: 600,
+                        delay: 200,
+                        easing: 'easeOutQuart'
+                    });
+                }
+
+                // Animasi untuk feature cards
+                if (target.classList.contains('feature-card')) {
+                    const cards = document.querySelectorAll('.feature-card');
+                    anime({
+                        targets: cards,
+                        opacity: [0, 1],
+                        translateY: [60, 0],
+                        scale: [0.8, 1],
+                        duration: 800,
+                        delay: anime.stagger(150),
+                        easing: 'easeOutBack'
+                    });
+                }
+
+                // Animasi untuk statistik
+                if (target.classList.contains('stats-title')) {
+                    anime({
+                        targets: '.stats-title',
+                        opacity: [0, 1],
+                        translateY: [40, 0],
+                        duration: 800,
+                        easing: 'easeOutQuart'
+                    });
+                }
+                
+                if (target.classList.contains('stats-subtitle')) {
+                    anime({
+                        targets: '.stats-subtitle',
+                        opacity: [0, 1],
+                        translateY: [30, 0],
+                        duration: 600,
+                        delay: 200,
+                        easing: 'easeOutQuart'
+                    });
+                }
+
+                if (target.classList.contains('stat-item')) {
+                    const statItems = document.querySelectorAll('.stat-item');
+                    anime({
+                        targets: statItems,
+                        opacity: [0, 1],
+                        translateY: [50, 0],
+                        scale: [0.5, 1],
+                        duration: 1000,
+                        delay: anime.stagger(200),
+                        easing: 'easeOutElastic(1, .8)'
+                    });
+                }
+
+                // Animasi untuk CTA section
+                if (target.classList.contains('cta-title')) {
+                    anime({
+                        targets: '.cta-title',
+                        opacity: [0, 1],
+                        translateY: [40, 0],
+                        duration: 800,
+                        easing: 'easeOutQuart'
+                    });
+                }
+                
+                if (target.classList.contains('cta-subtitle')) {
+                    anime({
+                        targets: '.cta-subtitle',
+                        opacity: [0, 1],
+                        translateY: [30, 0],
+                        duration: 600,
+                        delay: 200,
+                        easing: 'easeOutQuart'
+                    });
+                }
+                
+                if (target.classList.contains('cta-buttons')) {
+                    anime({
+                        targets: '.cta-buttons',
+                        opacity: [0, 1],
+                        translateY: [20, 0],
+                        duration: 600,
+                        delay: 400,
+                        easing: 'easeOutQuart'
+                    });
+                }
+
+                // Unobserve setelah animasi dijalankan
+                observer.unobserve(target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe semua elemen yang perlu dianimasi
+    const elementsToObserve = [
+        '.features-title',
+        '.features-subtitle', 
+        '.feature-card:first-child', // Hanya observe card pertama untuk trigger semua
+        '.stats-title',
+        '.stats-subtitle',
+        '.stat-item:first-child', // Hanya observe item pertama untuk trigger semua
+        '.cta-title',
+        '.cta-subtitle',
+        '.cta-buttons'
+    ];
+
+    elementsToObserve.forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element) {
+            observer.observe(element);
+        }
+    });
+
+    // Animasi hover untuk feature cards
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            anime({
+                targets: card,
+                translateY: -10,
+                scale: 1.02,
+                duration: 300,
+                easing: 'easeOutQuart'
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            anime({
+                targets: card,
+                translateY: 0,
+                scale: 1,
+                duration: 300,
+                easing: 'easeOutQuart'
+            });
+        });
+    });
+
+    // Animasi hover untuk stat items
+    const statItems = document.querySelectorAll('.stat-item');
+    statItems.forEach(item => {
+        const icon = item.querySelector('.w-20');
+        
+        item.addEventListener('mouseenter', () => {
+            anime({
+                targets: icon,
+                scale: 1.1,
+                rotate: '1turn',
+                duration: 600,
+                easing: 'easeOutElastic(1, .6)'
+            });
+        });
+
+        item.addEventListener('mouseleave', () => {
+            anime({
+                targets: icon,
+                scale: 1,
+                duration: 300,
+                easing: 'easeOutQuart'
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

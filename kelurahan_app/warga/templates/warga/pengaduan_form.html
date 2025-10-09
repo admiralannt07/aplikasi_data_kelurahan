@@ -1,0 +1,191 @@
+{% extends 'warga/base.html' %}
+
+{% block title %}Buat Pengaduan Baru - Kelurahan{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Breadcrumb -->
+    <nav class="flex mb-8" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+                <a href="{% url 'landing' %}" class="inline-flex items-center text-sm font-medium text-kelurahan-700 hover:text-kelurahan-600">
+                    <i class="fas fa-home mr-2"></i>
+                    Beranda
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <i class="fas fa-chevron-right text-kelurahan-400 mx-2"></i>
+                    <a href="{% url 'pengaduan-list' %}" class="ml-1 text-sm font-medium text-kelurahan-700 hover:text-kelurahan-600 md:ml-2">Daftar Pengaduan</a>
+                </div>
+            </li>
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <i class="fas fa-chevron-right text-kelurahan-400 mx-2"></i>
+                    <span class="ml-1 text-sm font-medium text-kelurahan-500 md:ml-2">Buat Pengaduan</span>
+                </div>
+            </li>
+        </ol>
+    </nav>
+
+    <div class="max-w-2xl mx-auto">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="text-center">
+                <div class="mx-auto h-16 w-16 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-clipboard-list text-2xl text-orange-600"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-kelurahan-800 mb-2">Buat Pengaduan Baru</h1>
+                <p class="text-kelurahan-600">Sampaikan keluhan atau saran Anda kepada pihak kelurahan</p>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="px-6 py-4 bg-orange-50 border-b border-orange-200">
+                <h2 class="text-xl font-semibold text-kelurahan-800">
+                    <i class="fas fa-edit mr-2"></i>
+                    Detail Pengaduan
+                </h2>
+            </div>
+
+            <form method="post" class="px-6 py-6">
+                {% csrf_token %}
+                
+                <div class="space-y-6">
+                    <!-- Pelapor -->
+                    <div>
+                        <label for="{{ form.pelapor.id_for_label }}" class="block text-sm font-medium text-kelurahan-700 mb-2">
+                            <i class="fas fa-user mr-2"></i>
+                            Pelapor
+                        </label>
+                        {{ form.pelapor }}
+                        {% if form.pelapor.errors %}
+                            <div class="mt-1 text-sm text-red-600">
+                                {% for error in form.pelapor.errors %}
+                                    <p><i class="fas fa-exclamation-circle mr-1"></i>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-kelurahan-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Pilih nama warga yang melaporkan pengaduan ini
+                        </p>
+                    </div>
+
+                    <!-- Judul -->
+                    <div>
+                        <label for="{{ form.judul.id_for_label }}" class="block text-sm font-medium text-kelurahan-700 mb-2">
+                            <i class="fas fa-heading mr-2"></i>
+                            Judul Pengaduan
+                        </label>
+                        {{ form.judul }}
+                        {% if form.judul.errors %}
+                            <div class="mt-1 text-sm text-red-600">
+                                {% for error in form.judul.errors %}
+                                    <p><i class="fas fa-exclamation-circle mr-1"></i>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-kelurahan-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Berikan judul yang singkat dan jelas mengenai pengaduan
+                        </p>
+                    </div>
+
+                    <!-- Deskripsi -->
+                    <div>
+                        <label for="{{ form.deskripsi.id_for_label }}" class="block text-sm font-medium text-kelurahan-700 mb-2">
+                            <i class="fas fa-align-left mr-2"></i>
+                            Deskripsi Pengaduan
+                        </label>
+                        {{ form.deskripsi }}
+                        {% if form.deskripsi.errors %}
+                            <div class="mt-1 text-sm text-red-600">
+                                {% for error in form.deskripsi.errors %}
+                                    <p><i class="fas fa-exclamation-circle mr-1"></i>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-kelurahan-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Jelaskan secara detail mengenai pengaduan Anda
+                        </p>
+                    </div>
+
+                    <!-- Status -->
+                    <div>
+                        <label for="{{ form.status.id_for_label }}" class="block text-sm font-medium text-kelurahan-700 mb-2">
+                            <i class="fas fa-flag mr-2"></i>
+                            Status Pengaduan
+                        </label>
+                        {{ form.status }}
+                        {% if form.status.errors %}
+                            <div class="mt-1 text-sm text-red-600">
+                                {% for error in form.status.errors %}
+                                    <p><i class="fas fa-exclamation-circle mr-1"></i>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-kelurahan-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Status awal pengaduan (biasanya "Pending" untuk pengaduan baru)
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-6 mt-6 border-t border-kelurahan-200">
+                    <button type="submit" 
+                            class="flex-1 bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg">
+                        <i class="fas fa-paper-plane"></i>
+                        Kirim Pengaduan
+                    </button>
+                    
+                    <a href="{% url 'pengaduan-list' %}" 
+                       class="flex-1 bg-kelurahan-100 hover:bg-kelurahan-200 text-kelurahan-700 px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-center">
+                        <i class="fas fa-times"></i>
+                        Batal
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Help Section -->
+        <div class="mt-8 bg-orange-50 border border-orange-200 rounded-lg p-6">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-lightbulb text-orange-500 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-orange-800 mb-2">Tips Pengaduan yang Efektif</h3>
+                    <div class="text-sm text-orange-700 space-y-1">
+                        <p>• Berikan judul yang spesifik dan mudah dipahami</p>
+                        <p>• Jelaskan masalah secara detail dengan bahasa yang sopan</p>
+                        <p>• Sertakan informasi lokasi jika pengaduan terkait infrastruktur</p>
+                        <p>• Berikan saran solusi jika memungkinkan</p>
+                        <p>• Pengaduan akan diproses maksimal 3x24 jam kerja</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="mt-6 bg-kelurahan-50 border border-kelurahan-200 rounded-lg p-6">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-phone text-kelurahan-500 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-kelurahan-800 mb-2">Kontak Darurat</h3>
+                    <div class="text-sm text-kelurahan-700">
+                        <p>Untuk pengaduan mendesak, hubungi:</p>
+                        <p class="font-medium">Kantor Kelurahan: (021) 123-4567</p>
+                        <p class="font-medium">WhatsApp: +62 812-3456-7890</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

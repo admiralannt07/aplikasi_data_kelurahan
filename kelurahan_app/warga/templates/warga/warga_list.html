@@ -1,0 +1,193 @@
+{% extends 'warga/base.html' %} {% block title %}Daftar Warga - Kelurahan{% endblock %} {% block content %}
+<div class="container mx-auto px-4 py-8">
+  <!-- Header Section -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-kelurahan-800 mb-2"><i class="fas fa-users mr-3"></i>Daftar Warga</h1>
+        <p class="text-kelurahan-600">Kelola data warga kelurahan dengan mudah</p>
+      </div>
+      <a
+        href="{% url 'warga-tambah' %}"
+        class="bg-kelurahan-600 hover:bg-kelurahan-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2 shadow-md hover:shadow-lg"
+      >
+        <i class="fas fa-plus"></i>
+        Tambah Warga Baru
+      </a>
+    </div>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-gradient-to-r from-kelurahan-500 to-kelurahan-600 text-white rounded-lg p-6 shadow-md">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-kelurahan-100 text-sm font-medium">Total Warga</p>
+          <p class="text-3xl font-bold">{{ object_list|length }}</p>
+        </div>
+        <div class="bg-white bg-opacity-20 rounded-full p-3">
+          <i class="fas fa-users text-2xl"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg p-6 shadow-md">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-green-100 text-sm font-medium">Warga Aktif</p>
+          <p class="text-3xl font-bold">{{ object_list|length }}</p>
+        </div>
+        <div class="bg-white bg-opacity-20 rounded-full p-3">
+          <i class="fas fa-check-circle text-2xl"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg p-6 shadow-md">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-blue-100 text-sm font-medium">Data Terdaftar</p>
+          <p class="text-3xl font-bold">100%</p>
+        </div>
+        <div class="bg-white bg-opacity-20 rounded-full p-3">
+          <i class="fas fa-chart-line text-2xl"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warga List -->
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="px-6 py-4 bg-kelurahan-50 border-b border-kelurahan-200">
+      <h2 class="text-xl font-semibold text-kelurahan-800">Data Warga Terdaftar</h2>
+    </div>
+
+    {% if object_list %}
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-kelurahan-100">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-kelurahan-700 uppercase tracking-wider">No</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-kelurahan-700 uppercase tracking-wider">
+              Nama Lengkap
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-kelurahan-700 uppercase tracking-wider">NIK</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-kelurahan-700 uppercase tracking-wider">Alamat</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-kelurahan-700 uppercase tracking-wider">Aksi</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-kelurahan-200">
+          {% for warga in object_list %}
+          <tr class="hover:bg-kelurahan-50 transition-colors duration-200">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-kelurahan-900">{{ forloop.counter }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10">
+                  <div class="h-10 w-10 rounded-full bg-kelurahan-500 flex items-center justify-center">
+                    <span class="text-white font-medium text-sm">{{ warga.nama_lengkap|first|upper }}</span>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <div class="text-sm font-medium text-kelurahan-900">{{ warga.nama_lengkap }}</div>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-kelurahan-600">{{ warga.nik }}</td>
+            <td class="px-6 py-4 text-sm text-kelurahan-600">
+              <div class="max-w-xs truncate">{{ warga.alamat }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <div class="flex items-center gap-2">
+                <a
+                  href="{% url 'warga_detail' warga.pk %}"
+                  class="text-blue-600 hover:text-blue-900 inline-flex items-center gap-1 transition-colors duration-200 px-2 py-1 rounded-md hover:bg-blue-50"
+                  title="Lihat Detail"
+                >
+                  <i class="fas fa-eye"></i>
+                  Detail
+                </a>
+                <a
+                  href="{% url 'warga-edit' warga.pk %}"
+                  class="text-green-600 hover:text-green-900 inline-flex items-center gap-1 transition-colors duration-200 px-2 py-1 rounded-md hover:bg-green-50"
+                  title="Edit Data"
+                >
+                  <i class="fas fa-edit"></i>
+                  Edit
+                </a>
+                <a
+                  href="{% url 'warga-hapus' warga.pk %}"
+                  class="text-red-600 hover:text-red-900 inline-flex items-center gap-1 transition-colors duration-200 px-2 py-1 rounded-md hover:bg-red-50"
+                  title="Hapus Data"
+                  onclick="return confirm('Apakah Anda yakin ingin menghapus data warga {{ warga.nama_lengkap }}?')"
+                >
+                  <i class="fas fa-trash"></i>
+                  Hapus
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="px-6 py-12 text-center">
+      <div class="mx-auto h-24 w-24 text-kelurahan-400 mb-4">
+        <i class="fas fa-users text-6xl"></i>
+      </div>
+      <h3 class="text-lg font-medium text-kelurahan-900 mb-2">Belum ada data warga</h3>
+      <p class="text-kelurahan-600 mb-6">Mulai dengan menambahkan warga pertama ke dalam sistem</p>
+      <a
+        href="{% url 'warga-tambah' %}"
+        class="bg-kelurahan-600 hover:bg-kelurahan-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2"
+      >
+        <i class="fas fa-plus"></i>
+        Tambah Warga Pertama
+      </a>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-lg font-semibold text-kelurahan-800 mb-4">Aksi Cepat</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <a
+        href="{% url 'pengaduan-list' %}"
+        class="flex items-center p-4 bg-kelurahan-50 hover:bg-kelurahan-100 rounded-lg transition-colors duration-200 group"
+      >
+        <div
+          class="bg-kelurahan-500 text-white rounded-lg p-3 mr-4 group-hover:bg-kelurahan-600 transition-colors duration-200"
+        >
+          <i class="fas fa-clipboard-list text-xl"></i>
+        </div>
+        <div>
+          <h4 class="font-medium text-kelurahan-900">Lihat Pengaduan</h4>
+          <p class="text-sm text-kelurahan-600">Kelola pengaduan warga</p>
+        </div>
+        <i
+          class="fas fa-arrow-right text-kelurahan-400 ml-auto group-hover:text-kelurahan-600 transition-colors duration-200"
+        ></i>
+      </a>
+
+      <a
+        href="{% url 'pengaduan-tambah' %}"
+        class="flex items-center p-4 bg-green-50 hover:bg-green-100 rounded-lg transition-colors duration-200 group"
+      >
+        <div
+          class="bg-green-500 text-white rounded-lg p-3 mr-4 group-hover:bg-green-600 transition-colors duration-200"
+        >
+          <i class="fas fa-plus-circle text-xl"></i>
+        </div>
+        <div>
+          <h4 class="font-medium text-kelurahan-900">Buat Pengaduan</h4>
+          <p class="text-sm text-kelurahan-600">Tambah pengaduan baru</p>
+        </div>
+        <i
+          class="fas fa-arrow-right text-kelurahan-400 ml-auto group-hover:text-green-600 transition-colors duration-200"
+        ></i>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
