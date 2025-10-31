@@ -4,7 +4,7 @@ from .models import Warga, Pengaduan
 from django.urls import reverse_lazy
 from .forms import WargaForm, PengaduanForm
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from .serializers import WargaSerializer
+from .serializers import WargaSerializer, PengaduanSerializer
 
 
 # Create your views here.
@@ -101,3 +101,21 @@ class WargaRetrieveAPIView(RetrieveAPIView):
     """
     queryset = Warga.objects.all()
     serializer_class = WargaSerializer
+
+
+class PengaduanListAPIView(ListAPIView):
+    """
+    API untuk daftar semua pengaduan.
+    Contoh: /api/pengaduan/
+    """
+    queryset = Pengaduan.objects.select_related('pelapor').all()
+    serializer_class = PengaduanSerializer
+
+
+class PengaduanRetrieveAPIView(RetrieveAPIView):
+    """
+    API untuk mengambil detail satu Pengaduan berdasarkan primary key (ID).
+    Contoh: /api/pengaduan/1/
+    """
+    queryset = Pengaduan.objects.select_related('pelapor').all()
+    serializer_class = PengaduanSerializer
