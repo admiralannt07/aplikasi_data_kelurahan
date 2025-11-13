@@ -1,14 +1,18 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from .views import (
-    WargaListAPIView,
-    WargaRetrieveAPIView,
-    PengaduanListAPIView,
-    PengaduanRetrieveAPIView,
+    WargaViewSet,
+    PengaduanViewSet,
 )
 
+# 1. Bikin routernya
+router = DefaultRouter()
+
+# 2. Daftarin ViewSet kita ke router
+# Format: router.register(r'prefix_url', NamaViewSet)
+router.register(r'warga', WargaViewSet, basename='warga')
+router.register(r'pengaduan', PengaduanViewSet, basename='pengaduan')
+
 urlpatterns = [
-    path('warga/', WargaListAPIView.as_view(), name='api-warga-list'),
-    path('warga/<int:pk>/', WargaRetrieveAPIView.as_view(), name='api-warga-detail'),
-    path('pengaduan/', PengaduanListAPIView.as_view(), name='api-pengaduan-list'),
-    path('pengaduan/<int:pk>/', PengaduanRetrieveAPIView.as_view(), name='api-pengaduan-detail'),
+    path('', include(router.urls)),
 ]

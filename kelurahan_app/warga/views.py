@@ -3,6 +3,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Warga, Pengaduan
 from django.urls import reverse_lazy
 from .forms import WargaForm, PengaduanForm
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .serializers import WargaSerializer, PengaduanSerializer
 
@@ -90,32 +92,50 @@ class PengaduanDeleteView(DeleteView):
     success_url = reverse_lazy('pengaduan-list')
 
 # --- API VIEWS ---
-class WargaListAPIView(ListAPIView):
-    queryset = Warga.objects.all()
-    serializer_class = WargaSerializer
+# class WargaListAPIView(ListAPIView):
+#     queryset = Warga.objects.all()
+#     serializer_class = WargaSerializer
 
-class WargaRetrieveAPIView(RetrieveAPIView):
+# class WargaRetrieveAPIView(RetrieveAPIView):
+#     """
+#     API untuk mengambil detail satu Warga berdasarkan primary key (ID).
+#     Contoh: /api/warga/1/
+#     """
+#     queryset = Warga.objects.all()
+#     serializer_class = WargaSerializer
+
+# --- API VIEWS ---
+class WargaViewSet(viewsets.ModelViewSet):
     """
-    API untuk mengambil detail satu Warga berdasarkan primary key (ID).
-    Contoh: /api/warga/1/
+    API endpoint yang otomatis nyediain CRUD (Create, Read, Update, Delete) 
+    untuk data Warga.
     """
-    queryset = Warga.objects.all()
-    serializer_class = WargaSerializer
+    queryset = Warga.objects.all() # Data apa yang mau ditampilkan
+    serializer_class = WargaSerializer # Pakai penerjemah yang mana
+    permission_classes = [IsAuthenticatedOrReadOnly] # Hanya admin yang bisa CRUD, user hanya bisa baca
 
 
-class PengaduanListAPIView(ListAPIView):
-    """
-    API untuk daftar semua pengaduan.
-    Contoh: /api/pengaduan/
-    """
-    queryset = Pengaduan.objects.select_related('pelapor').all()
-    serializer_class = PengaduanSerializer
+# class PengaduanListAPIView(ListAPIView):
+#     """
+#     API untuk daftar semua pengaduan.
+#     Contoh: /api/pengaduan/
+#     """
+#     queryset = Pengaduan.objects.select_related('pelapor').all()
+#     serializer_class = PengaduanSerializer
 
 
-class PengaduanRetrieveAPIView(RetrieveAPIView):
+# class PengaduanRetrieveAPIView(RetrieveAPIView):
+#     """
+#     API untuk mengambil detail satu Pengaduan berdasarkan primary key (ID).
+#     Contoh: /api/pengaduan/1/
+#     """
+#     queryset = Pengaduan.objects.select_related('pelapor').all()
+#     serializer_class = PengaduanSerializer
+
+class PengaduanViewSet(viewsets.ModelViewSet):
     """
-    API untuk mengambil detail satu Pengaduan berdasarkan primary key (ID).
-    Contoh: /api/pengaduan/1/
+    API endpoint yang otomatis nyediain CRUD (Create, Read, Update, Delete) 
+    untuk data Pengaduan.
     """
-    queryset = Pengaduan.objects.select_related('pelapor').all()
-    serializer_class = PengaduanSerializer
+    queryset = Pengaduan.objects.select_related('pelapor').all() # Data apa yang mau ditampilkan
+    serializer_class = PengaduanSerializer # Pakai penerjemah yang mana
